@@ -5,7 +5,9 @@ const User=require("./models/User.js");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
+import cors from 'cors';
 require('dotenv').config();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -13,7 +15,7 @@ DBconnection();
 app.get("/home",(req,res)=>{
     res.send("Home Page");
 })
-app.post("/register",async (req,res)=>{
+app.post("/signup",async (req,res)=>{
     try{
         const  {firstname,lastname,email,password,role}=req.body;
         if(!(firstname && lastname && password && email && role)){
