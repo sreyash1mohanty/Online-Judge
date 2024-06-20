@@ -13,7 +13,7 @@ export default function Navbar() {
           <Toolbar>
             <Typography   variant="h6" 
             component={Link} 
-            to="/" 
+            to="/Home" 
             sx={{ flexGrow: 1, color: 'white', textDecoration: 'none' }}>
               Codeloft
             </Typography>

@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Home from './Pages/Home.jsx'
+import Blank from './Pages/Blank.jsx';
 import LoginForm from './components/login.jsx'
 import SignupForm from './components/SignUp.jsx';
 function App() {
   return (
     <Router>
-      <Home/>
+      <Blank/>
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/signup" element={<SignupForm/>} />

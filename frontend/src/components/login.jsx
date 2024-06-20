@@ -23,16 +23,20 @@ const handleSubmit = async (event) => {
     }
 };
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" >
         <Box
             sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '20px',
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             }}
         >
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ marginBottom: '20px' }}>
             Login
             </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -47,6 +51,7 @@ const handleSubmit = async (event) => {
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                sx={{ marginBottom: '15px' }}
             />
             <TextField
                 margin="normal"
@@ -59,12 +64,19 @@ const handleSubmit = async (event) => {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                sx={{ marginBottom: '15px' }}
             />
             <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{
+                    backgroundColor: '#007bff',
+                    color: 'white',
+                    '&:hover': {
+                        backgroundColor: '#0056b3',
+                    },
+                }}
             >
             Login
             </Button>
