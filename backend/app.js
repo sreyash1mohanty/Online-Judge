@@ -5,7 +5,7 @@ const User=require("./models/User.js");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
-import cors from 'cors';
+const cors = require('cors');
 require('dotenv').config();
 app.use(cors());
 app.use(express.json());
@@ -19,11 +19,11 @@ app.post("/signup",async (req,res)=>{
     try{
         const  {firstname,lastname,email,password,role}=req.body;
         if(!(firstname && lastname && password && email && role)){
-            return res.status(400).send("Please enter all the fields");
+            return res.status(400).json({ message: "Please enter all the fields" });
         }
         const existUser=await User.findOne({email});
         if(existUser){
-            return res.status(400).send("User already exists");
+            return res.status(400).json({ message: "User already exists" });
         }
         const hashPassword = bcrypt.hashSync(password,10);
         const user = await User.create({
@@ -33,7 +33,7 @@ app.post("/signup",async (req,res)=>{
             password: hashPassword,
             role,
         });
-        const token=jwt.sign({id:user._id,role},process.env.SECRET_KEY,{
+        const token=jwt.sign({id:user._id,role:user.role},process.env.SECRET_KEY,{
             expiresIn:"2h"
         });
         user.token=token;
@@ -44,6 +44,7 @@ app.post("/signup",async (req,res)=>{
         })
     }catch(error){
         console.error(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 })
 app.post("/login", async (req, res) => {
@@ -60,7 +61,7 @@ app.post("/login", async (req, res) => {
         if (!enteredPassword) {
             return res.status(401).send("Password is incorrect");
         }
-        const token = jwt.sign({ id: user._id,role}, process.env.SECRET_KEY, {
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.SECRET_KEY, {
             expiresIn: "1d",
         });
         user.token = token;
@@ -76,6 +77,7 @@ app.post("/login", async (req, res) => {
         });
     } catch (error) {
         console.log(error.message);
+        res.status(500).send("Internal Server Error");
     }
 });
 app.listen(8080,()=>{

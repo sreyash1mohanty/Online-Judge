@@ -11,7 +11,10 @@ export default function Navbar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={{ backgroundColor: '#333' }}>
           <Toolbar>
-            <Typography   variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography   variant="h6" 
+            component={Link} 
+            to="/" 
+            sx={{ flexGrow: 1, color: 'white', textDecoration: 'none' }}>
               Codeloft
             </Typography>
             <Button  component={Link} to="/login"   sx={{ color: 'white', backgroundColor: 'transparent' }}>Login</Button>

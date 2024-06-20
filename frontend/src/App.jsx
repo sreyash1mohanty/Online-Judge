@@ -9,8 +9,8 @@ function App() {
     <Router>
       <Home/>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" component={<SignupForm/>} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/signup" element={<SignupForm/>} />
         <Route path="/login" element={<LoginForm />} />
       </Routes>
     </Router>

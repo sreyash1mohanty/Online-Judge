@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Container } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        const response = await axios.post('http://localhost:8000/login', {
+        const response = await axios.post('http://localhost:8080/login', {
         email,
         password
-    });
+        });
+        alert('Login successful');
+        console.log(response.data);
+        navigate('/home');
     console.log(response.data);
     }catch (error) {
-        console.error('Error logging in:'+ error);
+        alert('Error logging in: ' + (error.response?.data?.message || error.message));
+        console.error('Error logging in:', error);
     }
 };
     return (
