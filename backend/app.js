@@ -7,7 +7,10 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
 require('dotenv').config();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -69,12 +72,19 @@ app.post("/login", async (req, res) => {
         const options = {
             expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
             httpOnly: true,
+            secure: true, // Only send cookie over HTTPS
+            sameSite: 'none' ,
         };
-        res.status(200).cookie("token", token, options).json({
+        res.cookie('token', token, options).json({
             message: "You have successfully logged in!",
             success: true,
-            token,
+            token
         });
+        // res.status(200).cookie("token", token, options).json({
+        //     message: "You have successfully logged in!",
+        //     success: true,
+        //     token,
+        // });
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");

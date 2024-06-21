@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { TextField, Button, Box, Typography, Container } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+import { AuthContext } from '../context/AuthContext';
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -13,10 +17,11 @@ const handleSubmit = async (event) => {
         email,
         password
         });
+        const { data } = response;
         alert('Login successful');
-        console.log(response.data);
+        login(data.token);  // Update the context
         navigate('/home');
-    console.log(response.data);
+    // console.log(response.data);
     }catch (error) {
         alert('Error logging in: ' + (error.response?.data?.message || error.message));
         console.error('Error logging in:', error);
