@@ -1,5 +1,6 @@
+
 import React, { useContext } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 import Home from './Pages/Home';
 import Blank from './Pages/Blank';

@@ -2,6 +2,7 @@ const express=require("express");
 const app=express();
 const {DBconnection}=require("./database/db.js");
 const User=require("./models/User.js");
+const Problem=require("./models/Problem.js");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
@@ -90,6 +91,75 @@ app.post("/login", async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+//ALL PROBLEMS
+app.get("/problems", async (req, res) => {
+    try {
+        const problems = await Problem.find({});
+        res.json(problems);
+    } catch (err) {
+        console.log(" Unable to fetch problems," + err);
+        res.status(500).json({ message: "Unable to fetch problems" });
+    }
+});
+//INDIVIDUAL PROBLEM
+app.get("/problems/:id", async (req, res) => {
+    let {id}=req.params;
+    try {
+        const problem = await Problem.findById(id);
+        if (!problem) {
+            req.flash("error"," Problem does not exist");
+            res.redirect("/problems");
+            // return res.status(404).json({ message: "Problem not found" });
+        }
+        res.json(problem);
+    }catch (err) {
+        console.log("Unable to fetch problem : " + err);
+        res.status(500).json({ message: "Unable to  fetch the problem" });
+    }
+});
+// CREATE PROBLEM
+app.post('/create_problem', async (req, res) => {
+    try {
+        const { problem_name, problem_statement, author, difficulty } = req.body;
+
+        if (!(problem_name && problem_statement)) {
+            return res.status(400).send("Please enter all the fields");
+        }
+        const problem = await Problem.create({ problem_name, problem_statement, author, difficulty });
+        res.status(201).json({
+            message: "Successfully created",
+            success: true,
+            problem,
+        });
+    } catch (err) {
+        console.log("Unable to create : " + err);
+        res.status(500).json({ message: " Unknown Error "});
+    }
+});
+// DELETE
+app.delete('/delete/:id', async (req, res)=> {
+    let {id}=req.params;
+    try {
+        await Problem.findByIdAndDelete(id);
+        req.flash("success","Problem Deleted!!");
+        res.redirect("/problems");
+    } catch (err) {
+        console.log("Error while deleting : " + err);
+        res.status(500).json({ message: "Error while deleting" });
+    }
+});
+// UPDATE
+app.put('/edit_problem/:id', async (req, res) => {
+    let {id}=req.params;
+    try {
+    await Problem.findByIdAndUpdate(id,{...req.body.problem});
+    req.flash("success"," Problem Updated!!");
+    res.redirect(`/probelms/${id}`);
+    } catch (err) {
+        console.log("Unable to edit " + err);
+        res.status(500).json({ message: "Unable to edit"});
+    }
+})
 app.listen(8080,()=>{
     console.log("app is listening");
 });

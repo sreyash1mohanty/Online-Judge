@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext,useEffect } from 'react';
 import { TextField, Button, Box, Typography, Container } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
+    const { login,isAuthenticated } = useContext(AuthContext);
 const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -27,6 +27,11 @@ const handleSubmit = async (event) => {
         console.error('Error logging in:', error);
     }
 };
+    useEffect(() => {
+    if(isAuthenticated ){
+        navigate('/home');
+    }
+    }, [isAuthenticated]);
     return (
         <Container component="main" maxWidth="xs" >
         <Box

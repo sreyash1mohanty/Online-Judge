@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-
 export default function Navbar() {
     const { isAuthenticated, logout } = useContext(AuthContext);
     const navigate = useNavigate();
