@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 export default function Navbar() {
-    const { isAuthenticated, logout } = useContext(AuthContext);
+    const { isAuthenticated, logout,userRole } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -23,9 +23,24 @@ export default function Navbar() {
                         Codeloft
                     </Typography>
                     {isAuthenticated ? (
-                        <Button onClick={handleLogout} sx={{ color: 'white', backgroundColor: 'transparent' }}>
-                            Logout
-                        </Button>
+                        <>                       
+                            {userRole === 'admin' && (
+                                <Button  component={Link} to="/create-problem"  sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                    Create Problem
+                                </Button>
+                            )}
+                            {userRole === 'user' && (
+                                <Button   component={Link} to="/all-problems" sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                    All Problems
+                                </Button>
+                            )}
+                            <Button onClick={handleLogout} sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                Logout
+                            </Button>
+                        
+
+                        </>
+
                     ) : (
                         <>
                             <Button component={Link} to="/login" sx={{ color: 'white', backgroundColor: 'transparent' }}>
