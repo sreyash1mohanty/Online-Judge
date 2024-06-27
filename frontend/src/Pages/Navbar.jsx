@@ -24,10 +24,15 @@ export default function Navbar() {
                     </Typography>
                     {isAuthenticated ? (
                         <>                       
-                            {userRole === 'admin' && (
-                                <Button  component={Link} to="/create-problem"  sx={{ color: 'white', backgroundColor: 'transparent' }}>
-                                    Create Problem
-                                </Button>
+                            {userRole ==='admin' && (
+                                        <>
+                                            <Button component={Link} to="/create-problem" sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                                Create Problem
+                                            </Button>
+                                            <Button component={Link} to="/all-problems" sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                                All Problems
+                                            </Button>
+                                        </>
                             )}
                             {userRole === 'user' && (
                                 <Button   component={Link} to="/all-problems" sx={{ color: 'white', backgroundColor: 'transparent' }}>

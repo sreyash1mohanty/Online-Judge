@@ -120,46 +120,70 @@ app.get("/problems/:id", async (req, res) => {
 // CREATE PROBLEM
 app.post('/create_problem', async (req, res) => {
     try {
-        const { problem_name, problem_statement, author, difficulty } = req.body;
+        const { problem_name, problem_statement, author, difficulty, userId } = req.body;
 
-        if (!(problem_name && problem_statement)) {
+        if (!(problem_name && problem_statement && userId)) {
             return res.status(400).send("Please enter all the fields");
         }
-        const problem = await Problem.create({ problem_name, problem_statement, author, difficulty });
+
+        const problem = await Problem.create({ 
+            problem_name, 
+            problem_statement, 
+            author, 
+            difficulty, 
+            createdBy: userId 
+        });
         res.status(201).json({
             message: "Successfully created",
             success: true,
-            problem,
+            problem
         });
     } catch (err) {
         console.log("Unable to create : " + err);
-        res.status(500).json({ message: " Unknown Error "});
+        res.status(500).json({ message: "Unknown Error" });
     }
 });
+
 // DELETE
-app.delete('/delete/:id', async (req, res)=> {
-    let {id}=req.params;
+app.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    const { userId } = req.body; 
     try {
+        const problem = await Problem.findById(id);
+        if (!problem) {
+            return res.status(404).json({ message: "Problem not found" });
+        }
+        if (problem.createdBy.toString() !== userId) {
+            return res.status(403).json({ message: "Unauthorized: You can only delete your own problems" });
+        }
         await Problem.findByIdAndDelete(id);
-        req.flash("success","Problem Deleted!!");
-        res.redirect("/problems");
+        res.json({ message: "Problem Deleted!!" });
     } catch (err) {
         console.log("Error while deleting : " + err);
         res.status(500).json({ message: "Error while deleting" });
     }
 });
+
 // UPDATE
 app.put('/edit_problem/:id', async (req, res) => {
-    let {id}=req.params;
+    const { id } = req.params;
+    const { userId, problem } = req.body;
     try {
-    await Problem.findByIdAndUpdate(id,{...req.body.problem});
-    req.flash("success"," Problem Updated!!");
-    res.redirect(`/probelms/${id}`);
+        const existingProblem = await Problem.findById(id);
+        if (!existingProblem) {
+            return res.status(404).json({ message: "Problem not found" });
+        }
+        if (existingProblem.createdBy.toString() !== userId) {
+            return res.status(403).json({ message: "Unauthorized: You can only edit your own problems" });
+        }
+        await Problem.findByIdAndUpdate(id, { ...problem });
+        res.json({ message: "Problem Updated!!" });
     } catch (err) {
         console.log("Unable to edit " + err);
-        res.status(500).json({ message: "Unable to edit"});
+        res.status(500).json({ message: "Unable to edit" });
     }
-})
+});
+
 app.listen(8080,()=>{
     console.log("app is listening");
 });

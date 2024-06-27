@@ -17,5 +17,10 @@ const problemSchema=new Schema({
         type:String,
         required:true
     },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 });
 module.exports=mongoose.model("Problem",problemSchema);

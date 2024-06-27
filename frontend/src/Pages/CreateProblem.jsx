@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { TextField, Button, Box, Container, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 function CreateProblem() {
+    const { userId } = useContext(AuthContext);
     const [problemData, setProblemData] = useState({
         problem_name: '',
         problem_statement: '',
@@ -17,7 +19,7 @@ function CreateProblem() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/create_problem', problemData);
+            const response = await axios.post('http://localhost:8080/create_problem',{...problemData,userId});
             if (response.data.success) {
                 alert('Problem created successfully');
                 navigate('/all-problems');
