@@ -42,6 +42,7 @@ function CreateProblem() {
                         margin="normal"
                         value={problemData.problem_name}
                         onChange={handleChange}
+                        sx={{ backgroundColor: 'white' }}
                     />
                     <TextField
                         name="problem_statement"
@@ -53,6 +54,7 @@ function CreateProblem() {
                         margin="normal"
                         value={problemData.problem_statement}
                         onChange={handleChange}
+                        sx={{ backgroundColor: 'white' }}
                     />
                     <TextField
                         name="author"
@@ -62,6 +64,7 @@ function CreateProblem() {
                         margin="normal"
                         value={problemData.author}
                         onChange={handleChange}
+                        sx={{ backgroundColor: 'white' }}
                     />
                     <TextField
                         name="difficulty"
@@ -71,8 +74,9 @@ function CreateProblem() {
                         margin="normal"
                         value={problemData.difficulty}
                         onChange={handleChange}
+                        sx={{ backgroundColor: 'white' }}
                     />
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Create</Button>
+                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2   }}>Create</Button>
                 </Box>
             </Box>
         </Container>
