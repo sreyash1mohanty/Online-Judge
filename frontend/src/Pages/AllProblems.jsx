@@ -26,9 +26,10 @@ function AllProblems() {
                     data: { userId }} );
                 if (response.status === 200) {
                     alert('Problem deleted successfully');
-                    
-
                 }
+                // else if (response.status === 403) {
+                //     alert( "Unauthorized: You can only delete your own problems");
+                // }
             } catch (err) {
                 console.error("Error deleting the problem", err);
                 alert('Error deleting problem');

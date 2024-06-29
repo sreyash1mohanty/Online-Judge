@@ -1,6 +1,8 @@
 const express=require("express");
 const app=express();
 const {DBconnection}=require("./database/db.js");
+const { generateFile } = require('./generateFile');
+const {executeCpp}=require('./executeCpp.js');
 const User=require("./models/User.js");
 const Problem=require("./models/Problem.js");
 const bcrypt = require("bcryptjs");
@@ -96,8 +98,8 @@ app.get("/problems", async (req, res) => {
     try {
         const problems = await Problem.find({});
         res.json(problems);
-    } catch (err) {
-        console.log(" Unable to fetch problems," + err);
+    } catch (error) {
+        console.log(" Unable to fetch problems," + error);
         res.status(500).json({ message: "Unable to fetch problems" });
     }
 });
@@ -112,8 +114,8 @@ app.get("/problems/:id", async (req, res) => {
             // return res.status(404).json({ message: "Problem not found" });
         }
         res.json(problem);
-    }catch (err) {
-        console.log("Unable to fetch problem : " + err);
+    }catch (error) {
+        console.log("Unable to fetch problem : " + error);
         res.status(500).json({ message: "Unable to  fetch the problem" });
     }
 });
@@ -125,7 +127,6 @@ app.post('/create_problem', async (req, res) => {
         if (!(problem_name && problem_statement && userId)) {
             return res.status(400).send("Please enter all the fields");
         }
-
         const problem = await Problem.create({ 
             problem_name, 
             problem_statement, 
@@ -138,8 +139,8 @@ app.post('/create_problem', async (req, res) => {
             success: true,
             problem
         });
-    } catch (err) {
-        console.log("Unable to create : " + err);
+    } catch (error) {
+        console.log("Unable to create : " + error);
         res.status(500).json({ message: "Unknown Error" });
     }
 });
@@ -153,14 +154,14 @@ app.delete('/delete/:id', async (req, res) => {
         if (!problem) {
             return res.status(404).json({ message: "Problem not found" });
         }
-        if (problem.createdBy.toString() !== userId) {
+        if (problem.createdBy.toString()!== userId) {
             return res.status(403).json({ message: "Unauthorized: You can only delete your own problems" });
         }
         await Problem.findByIdAndDelete(id);
         res.json({ message: "Problem Deleted!!" });
-    } catch (err) {
-        console.log("Error while deleting : " + err);
-        res.status(500).json({ message: "Error while deleting" });
+    } catch (error) {
+        console.log("Error while deleting : " + error);
+        res.status(500).json({ message: "Unauthorized: You can only delete your own problems" });
     }
 });
 
@@ -178,12 +179,25 @@ app.put('/edit_problem/:id', async (req, res) => {
         }
         await Problem.findByIdAndUpdate(id, { ...problem });
         res.json({ message: "Problem Updated!!" });
-    } catch (err) {
-        console.log("Unable to edit " + err);
+    } catch (error) {
+        console.log("Unable to edit " + error);
         res.status(500).json({ message: "Unable to edit" });
     }
 });
-
+//COMPILER
+app.post('/run', async (req, res) => {
+    let { language, code } = req.body;
+    if (!language) language = 'cpp';
+    if(!code) return res.status(400).json({success:false,message:"Empty Code"});
+    try{
+        const filePath=await generateFile(language,code);
+        const output = await executeCpp(filePath);
+        res.json({ filePath, output });
+    }catch(error){
+        res.status(500).json({success:false,message:"Error :"+error.message});
+    }
+    
+});
 app.listen(8080,()=>{
     console.log("app is listening");
 });

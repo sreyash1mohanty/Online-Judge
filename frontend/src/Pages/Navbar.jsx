@@ -19,8 +19,8 @@ export default function Navbar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed" sx={{ backgroundColor: '#333' }}>
                 <Toolbar>
-                    <Typography variant="h6" component={Link} to="/home" sx={{ flexGrow: 1, color: 'white', textDecoration: 'none' }}>
-                        Codeloft
+                    <Typography variant="h6" sx={{ flexGrow: 1, color: 'white', textDecoration: 'none' }}>
+                        <Button sx={{ flexGrow: 1, color: 'white', textDecoration: 'none' }} component={Link} to="/home">Codeloft</Button>
                     </Typography>
                     {isAuthenticated ? (
                         <>                       
