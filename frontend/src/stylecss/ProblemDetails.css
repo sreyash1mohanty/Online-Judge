@@ -5,8 +5,8 @@
     padding: 20px;
     height: 80vh;
     width: 100%;
-    
 }
+
 .problem-details {
     flex: 1;
     width: 400px;
@@ -17,15 +17,18 @@
     margin-right: 25px;
     overflow-y: auto;
 }
+
 .problem-title {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 10px;
 }
+
 .problem-author, .problem-difficulty, .problem-statement {
     margin-bottom: 10px;
     color: #333;
 }
+
 .problem-compiler {
     margin-top: 10px;
     flex: 1;
@@ -37,11 +40,13 @@
     flex-direction: column;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .compiler-title {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 10px;
 }
+
 .code-editor {
     flex: 1;
     width: 700px;
@@ -60,8 +65,8 @@
 .run-code-button, .submit-code-button {
     padding: 10px 20px;
     margin-left: 10px;
-    background-color:rgb(86, 161, 222);
-    color: #282c34;
+    background-color: rgb(34, 144, 195);
+    color: hsl(0, 0%, 100%);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -69,11 +74,35 @@
     font-weight: 600;
     transition: background-color 0.3s ease;
 }
+
 .run-code-button:hover, .submit-code-button:hover {
-    background-color: #7bc9e6;
+    background-color: #0f6286;
 }
+
 .button-container {
     display: flex;
     justify-content: flex-end;
 }
 
+.code-output {
+    width: 100%;
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    color: #ddd;
+}
+
+.output-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+pre {
+    font-size: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #ddd;
+    font-family: 'Courier New', Courier, monospace;
+}

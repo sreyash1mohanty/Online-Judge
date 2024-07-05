@@ -109,7 +109,7 @@ app.get("/problems/:id", async (req, res) => {
     try {
         const problem = await Problem.findById(id);
         if (!problem) {
-            req.flash("error"," Problem does not exist");
+            // req.flash("error"," Problem does not exist");
             res.redirect("/problems");
             // return res.status(404).json({ message: "Problem not found" });
         }

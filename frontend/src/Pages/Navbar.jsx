@@ -38,10 +38,15 @@ export default function Navbar() {
                                 <Button   component={Link} to="/all-problems" sx={{ color: 'white', backgroundColor: 'transparent' }}>
                                     All Problems
                                 </Button>
+                                
                             )}
+                            <Button component={Link} to="/coding_resources" sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                    Knowledge Bank
+                            </Button>
                             <Button onClick={handleLogout} sx={{ color: 'white', backgroundColor: 'transparent' }}>
                                 Logout
                             </Button>
+
                         
 
                         </>

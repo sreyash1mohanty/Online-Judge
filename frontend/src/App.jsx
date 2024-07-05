@@ -9,6 +9,7 @@ import Home from './Pages/Home';
 import Blank from './Pages/Blank';
 import LoginForm from './components/login';
 import SignupForm from './components/SignUp';
+import Resources from './Pages/Resources.jsx';
 import { AuthContext } from './context/AuthContext.jsx';
 import Navbar from './Pages/Navbar';
 import UpdateProblem from './components/UpdateProblem.jsx';
@@ -28,6 +29,7 @@ function App() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Blank />} />
+                <Route path="/coding_resources" element={<PrivateRoute><Resources /></PrivateRoute>} />
                 <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
                 <Route path="/signup" element={<SignupForm />} />
                 <Route path="/login" element={<LoginForm />} />

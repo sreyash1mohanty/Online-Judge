@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../stylecss/ProblemDetails.css';
-
 function ProblemDetails() {
     const { id } = useParams();
     const [problem, setProblem] = useState(null);
+    const [code, setCode] = useState(`#include <iostream>
+using namespace std;
+
+int main() {
+    // Write your code here
+    return 0;
+}`);
+    const [output, setOutput] = useState('');
 
     useEffect(() => {
         async function fetchProblem() {
@@ -19,8 +26,16 @@ function ProblemDetails() {
         fetchProblem();
     }, [id]);
 
+    const handleRunCode = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/run', { language: 'cpp', code });
+            setOutput(response.data.output);
+        } catch (err) {
+            console.error("Unable to run code: " + err);
+            setOutput("Error running code");
+        }
+    };
     if (!problem) return <div>Loading...</div>;
-
     return (
         <div className="problem-details-container">
             <div className="problem-details">
@@ -34,21 +49,22 @@ function ProblemDetails() {
                 <textarea
                     className="code-editor"
                     placeholder="Write your code here..."
-                    defaultValue={`#include <iostream>
-using namespace std;
-
-int main() {
-    // Write your code here
-    return 0;
-}`}
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
                 ></textarea>
                 <div className="button-container">
-                    <button className="run-code-button">Run Code</button>
+                    <button className="run-code-button" onClick={handleRunCode}>Run Code</button>
                     <button className="submit-code-button">Submit Code</button>
                 </div>
+                {output && (
+                    <div className="code-output">
+                        <h2 className="output-title">Output:</h2>
+                        <pre>{output}</pre>
+                    </div>
+                )}
             </div>
         </div>
     );
 }
-
 export default ProblemDetails;
+
