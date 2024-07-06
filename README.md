@@ -14,4 +14,22 @@ CodeLoft is an online judge platform that allows users to solve coding problems 
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
-- **Compiler Frontend** :uses Monaco editor for compiler part 
+- **Compiler Frontend** : uses Monaco editor for compiler part
+  
+## Screenshots
+<div style="display: flex;">
+    <img src="ojimages/login.jpeg" alt="Screenshot 1" width="400" height="300">
+    <img src="ojimages/home.jpeg" alt="Screenshot 2" width="400" height="300">
+</div>
+<div style="display: flex;">
+  <img src="ojimages/problemspage.jpeg" alt="Screenshot 3" width="400" height="300">
+  <img src="ojimages/extraresources.jpeg" alt="Screenshot 4" width="400" height="300">
+</div>
+<div style="display: flex;">
+<img src="ojimages/updateproblem.jpeg" alt="Screenshot 5" width="400" height="300">
+<img src="ojimages/createproblem.jpeg" alt="Screenshot 6" width="400" height="300">
+</div>
+<div style="display: flex;">
+<img src="ojimages/compilerrun.jpeg" alt="Screenshot 5" width="400" height="300">
+<img src="ojimages/compilererror.jpeg" alt="Screenshot 6" width="400" height="300">
+</div>
