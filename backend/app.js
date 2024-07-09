@@ -3,6 +3,7 @@ const app=express();
 const {DBconnection}=require("./database/db.js");
 const { generateFile } = require('./generateFile');
 const {executeCpp}=require('./executeCpp.js');
+const {generateInput, generateInputFile}=require('./generateInput.js');
 const User=require("./models/User.js");
 const Problem=require("./models/Problem.js");
 const bcrypt = require("bcryptjs");
@@ -186,12 +187,13 @@ app.put('/edit_problem/:id', async (req, res) => {
 });
 //COMPILER
 app.post('/run', async (req, res) => {
-    let { language, code } = req.body;
+    let { language, code ,input} = req.body;
     if (!language) language = 'cpp';
     if(!code) return res.status(400).json({success:false,message:"Empty Code"});
     try{
         const filePath=await generateFile(language,code);
-        const output = await executeCpp(filePath);
+        const inputPath=await generateInputFile(input);
+        const output = await executeCpp(filePath,inputPath);
         res.json({ filePath, output });
     }catch(error){
         res.status(500).json({success:false,message:"Error :"+error.message});
