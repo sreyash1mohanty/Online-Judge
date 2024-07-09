@@ -1,38 +1,60 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
-import '../stylecss/UpdateProblem.css'
+import '../stylecss/UpdateProblem.css';
+
 const UpdateProblem = () => {
     const { userId } = useContext(AuthContext);
-    const { id } = useParams(); 
-    const navigate = useNavigate(); 
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [problemData, setProblemData] = useState({
         problem_name: '',
         problem_statement: '',
         author: '',
-        difficulty: ''
+        difficulty: '',
     });
+    const [testCases, setTestCases] = useState([{ input: '', output: '' }]);
+
     useEffect(() => {
         async function fetchProblem() {
             try {
                 const response = await axios.get(`http://localhost:8080/problems/${id}`);
-                const { problem_name, problem_statement, author, difficulty } = response.data;
+                const { problem_name, problem_statement, author, difficulty, testCases } = response.data;
                 setProblemData({ problem_name, problem_statement, author, difficulty });
+                setTestCases(testCases)
             } catch (err) {
                 console.error('Error fetching problem:', err);
             }
         }
         fetchProblem();
     }, [id]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProblemData({ ...problemData, [name]: value });
     };
+
+    const handleTestCaseChange = (index, e) => {
+        const { name, value } = e.target;
+        const newTestCases = [...testCases];
+        newTestCases[index] = { ...newTestCases[index], [name]: value };
+        setTestCases(newTestCases);
+    };
+
+    const handleAddTestCase = () => {
+        setTestCases([...testCases, { input: '', output: '' }]);
+    };
+
+    const handleRemoveTestCase = (index) => {
+        const newTestCases = testCases.filter((_, i) => i !== index);
+        setTestCases(newTestCases);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:8080/edit_problem/${id}`, { problem: problemData,userId});
+            const response = await axios.put(`http://localhost:8080/edit_problem/${id}`, { problem: { ...problemData, testCases }, userId });
             if (response.status === 200) {
                 alert('Problem updated successfully');
                 navigate('/all-problems');
@@ -42,6 +64,7 @@ const UpdateProblem = () => {
             alert('Error updating problem');
         }
     };
+
     return (
         <div className="update-problem-container">
             <h2>Update Problem</h2>
@@ -57,7 +80,7 @@ const UpdateProblem = () => {
                 />
                 <label htmlFor="problem_statement">Problem Statement:</label>
                 <textarea
-                    rows=""
+                    rows="4"
                     id="problem_statement"
                     name="problem_statement"
                     value={problemData.problem_statement}
@@ -85,6 +108,29 @@ const UpdateProblem = () => {
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
+                {testCases.map((testCase, index) => (
+                    <div key={index} className="test-case">
+                        <label>Test Case {index + 1} Input:</label>
+                        <input
+                            type="text"
+                            name="input"
+                            value={testCase.input}
+                            onChange={(e) => handleTestCaseChange(index, e)}
+                            required
+                        />
+                        <label>Test Case {index + 1} Output:</label>
+                        <input
+                            type="text"
+                            name="output"
+                            value={testCase.output}
+                            onChange={(e) => handleTestCaseChange(index, e)}
+                            required
+                        />
+                        <button type="button" onClick={() => handleRemoveTestCase(index)} disabled={testCases.length === 1}>Remove</button>
+                    </div>
+                ))}
+
+                <button type="button" onClick={handleAddTestCase}>Add Test Case</button>
                 <button type="submit">Update</button>
             </form>
         </div>

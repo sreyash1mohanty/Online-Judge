@@ -1,18 +1,21 @@
-
+.parent{
+    max-height: 800px;
+    overflow-y: auto;
+}
 .problem-details-container {
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    height: 80vh;
+    height:80vh;
     width: 100%;
 }
-
 .problem-details {
     flex: 1;
-    width: 400px;
+    width: 600px;
     margin-top: 10px;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: black;
+    color: white;
     border-radius: 8px;
     margin-right: 25px;
     overflow-y: auto;
@@ -22,11 +25,14 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 10px;
+    color: white;
 }
 
-.problem-author, .problem-difficulty, .problem-statement {
+.problem-author,
+.problem-difficulty,
+.problem-statement {
     margin-bottom: 10px;
-    color: #333;
+    color: white;
 }
 
 .problem-compiler {
@@ -49,8 +55,8 @@
 
 .code-editor {
     flex: 1;
-    width: 700px;
-    height: 500px;
+    width: 900px;
+    height: 400px;
     padding: 10px;
     background-color: #1e1e1e;
     border: 1px solid #444;
@@ -62,11 +68,26 @@
     resize: none;
 }
 
-.run-code-button, .submit-code-button {
+.input-editor {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ddd;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+.run-code-button,
+.submit-code-button {
     padding: 10px 20px;
     margin-left: 10px;
-    background-color: rgb(34, 144, 195);
-    color: hsl(0, 0%, 100%);
+    background-color: rgb(86, 161, 222);
+    color: #282c34;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -75,8 +96,9 @@
     transition: background-color 0.3s ease;
 }
 
-.run-code-button:hover, .submit-code-button:hover {
-    background-color: #0f6286;
+.run-code-button:hover,
+.submit-code-button:hover {
+    background-color: #7bc9e6;
 }
 
 .button-container {
@@ -86,11 +108,13 @@
 
 .code-output {
     width: 100%;
-    background-color: #1e1e1e;
+    transform: translateY(255px);
+    height: 200px;
+    margin-bottom: 0px;
+    color: white;
+    background-color: #000000;
     padding: 10px;
     border-radius: 4px;
-    margin-top: 20px;
-    color: #ddd;
 }
 
 .output-title {
@@ -99,10 +123,51 @@
     margin-bottom: 10px;
 }
 
-pre {
-    font-size: 1rem;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    color: #ddd;
-    font-family: 'Courier New', Courier, monospace;
+/* Error show section */
+.error-show {
+    margin-top: 5px;
+    padding: 20px;
+    background-color: #0a0909;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    color:white;
+}
+/* Test case results */
+.test-case-results {
+    margin-top: 20px;
+    color:white;
+}
+.test-case-header {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.test-results {
+    display: flex;
+    flex-direction: column;
+}
+.test-case-result {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.test-case-result.passed {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+.test-case-result.failed {
+    color: black;
+    background-color: #f3d1d3;
+    border: 1px solid #f5c6cb;
+}
+.test-case-passed {
+    color: #155724;
+    font-weight: bold;
+}
+.test-case-failed {
+    color: #721c24;
+    font-weight: bold;
 }

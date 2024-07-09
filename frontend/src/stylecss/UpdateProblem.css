@@ -1,43 +1,80 @@
 .update-problem-container {
-    width: 100%;
-    margin: 50px auto;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
-    border: 1px solid #ccc;
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .update-problem-form {
-    width: 800px;
-    height: 400px;
+    width: 700px;
+    max-height: 600px; /* Example max height; adjust as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
+    padding-right: 15px;
 }
 
+
 .update-problem-form label {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
+
 .update-problem-form input,
 .update-problem-form textarea,
 .update-problem-form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 15px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
+.update-problem-form textarea {
+    resize: vertical;
+}
+
 .update-problem-form button {
-    width: 100%;
-    padding: 10px;
+    padding: 10px 15px;
+    margin-top: 10px;
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
 }
 
-.update-problem-form button:hover {
-    background-color: #0056b3;
+.update-problem-form button[type="button"] {
+    background-color: #dc3545;
+    margin-right: 10px;
+}
+
+.update-problem-form button[type="submit"] {
+    background-color: #28a745;
+}
+
+.test-case {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+
+.test-case label {
+    margin-bottom: 5px;
+}
+
+.test-case input {
+    display: block; 
+    margin-bottom: 10px;
+}
+.test-case button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 10px;
 }

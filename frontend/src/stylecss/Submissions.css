@@ -1,0 +1,26 @@
+.submissions-container {
+    padding: 20px;
+    width: 100%;
+    margin-top: 0px;
+}
+.submissions-container h2 {
+    padding: 20px;
+    margin-top: 0px;
+    font-size: 5rem;
+    margin-left: 200px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.submissions-container table {
+    width: 1000px;
+    border-collapse: collapse;
+}
+.submissions-container th, .submissions-container td {
+    width: 1000px;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.submissions-container th {
+    background-color: #000000;
+    text-align: left;
+    color: white;
+}
