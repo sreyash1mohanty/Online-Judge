@@ -21,7 +21,6 @@ int main() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const [allTestCasesPassed, setAllTestCasesPassed] = useState(false);
-
     useEffect(() => {
         async function fetchProblem() {
             try {
@@ -108,7 +107,6 @@ int main() {
         <div className='parent'>
         <div className="problem-details-container">
             <div className="problem-details">
-=======
                 <h2 className="problem-title">{problem?.problem_name}</h2>
                 <p className="problem-author">Created by: {problem?.author}</p>
                 <p className="problem-difficulty">Difficulty: {problem?.difficulty}</p>

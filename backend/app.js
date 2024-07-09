@@ -3,7 +3,7 @@ const app=express();
 const {DBconnection}=require("./database/db.js");
 const { generateFile } = require('./generateFile');
 const {executeCpp}=require('./executeCpp.js');
-const {generateInput}=require('./generateInput.js');
+const {generateInputFile}=require('./generateInput.js');
 const User=require("./models/User.js");
 const Solution=require("./models/Solution.js");
 const Problem=require("./models/Problem.js");
@@ -193,7 +193,7 @@ app.post('/run', async (req, res) => {
     if(!code) return res.status(400).json({success:false,message:"Empty Code"});
     try{
         const filePath=await generateFile(language,code);
-        const inputPath=await generateInput(input);
+        const inputPath=await generateInputFile(input);
         const output = await executeCpp(filePath,inputPath);
         res.json({ filePath, output });
     }catch(error){
