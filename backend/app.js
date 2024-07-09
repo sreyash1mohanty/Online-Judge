@@ -3,7 +3,9 @@ const app=express();
 const {DBconnection}=require("./database/db.js");
 const { generateFile } = require('./generateFile');
 const {executeCpp}=require('./executeCpp.js');
+const {generateInput}=require('./generateInput.js');
 const User=require("./models/User.js");
+const Solution=require("./models/Solution.js");
 const Problem=require("./models/Problem.js");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
@@ -122,17 +124,17 @@ app.get("/problems/:id", async (req, res) => {
 // CREATE PROBLEM
 app.post('/create_problem', async (req, res) => {
     try {
-        const { problem_name, problem_statement, author, difficulty, userId } = req.body;
-
-        if (!(problem_name && problem_statement && userId)) {
-            return res.status(400).send("Please enter all the fields");
+        const { problem_name, problem_statement, author, difficulty, userId, testCases } = req.body;
+        if (!(problem_name && problem_statement && userId && Array.isArray(testCases))) {
+            return res.status(400).send("Please enter all the fields, including test cases");
         }
         const problem = await Problem.create({ 
             problem_name, 
             problem_statement, 
             author, 
             difficulty, 
-            createdBy: userId 
+            createdBy: userId,
+            testCases 
         });
         res.status(201).json({
             message: "Successfully created",
@@ -144,7 +146,6 @@ app.post('/create_problem', async (req, res) => {
         res.status(500).json({ message: "Unknown Error" });
     }
 });
-
 // DELETE
 app.delete('/delete/:id', async (req, res) => {
     const { id } = req.params;
@@ -186,17 +187,43 @@ app.put('/edit_problem/:id', async (req, res) => {
 });
 //COMPILER
 app.post('/run', async (req, res) => {
-    let { language, code } = req.body;
+    let { language, code,input } = req.body;
     if (!language) language = 'cpp';
     if(!code) return res.status(400).json({success:false,message:"Empty Code"});
     try{
         const filePath=await generateFile(language,code);
-        const output = await executeCpp(filePath);
+        const inputPath=await generateInput(input);
+        const output = await executeCpp(filePath,inputPath);
         res.json({ filePath, output });
     }catch(error){
         res.status(500).json({success:false,message:"Error :"+error.message});
     }
     
+});
+app.post('/submit', async (req, res) => {
+    const { userId, problemId, verdict } = req.body;
+    try {
+        const solution = new Solution({
+            userId,
+            problemId,
+            verdict
+        });
+        await solution.save();
+        res.status(201).json({ success: true, solution });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error: ' + error.message });
+    }
+});
+app.get('/all_submissions', async (req, res) => {
+    try {
+        const submissions = await Solution.find()
+            .populate('userId', 'firstname lastname email')
+            .populate('problemId', 'problem_name')
+            .exec();
+        res.status(200).json({ success: true, submissions });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error: ' + error.message });
+    }
 });
 app.listen(8080,()=>{
     console.log("app is listening");

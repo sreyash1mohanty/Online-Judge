@@ -1,9 +1,6 @@
-import path from 'path';
-import fs from 'fs'
-import { v4 as uuid } from 'uuid';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url); 
-const __dirname = path.dirname(__filename); 
+const path = require('path');
+const fs = require('fs');
+const { v4: uuid } = require('uuid');
 const dirInputs = path.join(__dirname, "inputs");
 if(!fs.existsSync(dirInputs)) {
     fs.mkdirSync(dirInputs, {recursive: true});

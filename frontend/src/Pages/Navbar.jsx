@@ -40,6 +40,9 @@ export default function Navbar() {
                                 </Button>
                                 
                             )}
+                           <Button component={Link} to="/submissions" sx={{ color: 'white', backgroundColor: 'transparent' }}>
+                                    Submissions
+                            </Button>
                             <Button component={Link} to="/coding_resources" sx={{ color: 'white', backgroundColor: 'transparent' }}>
                                     Knowledge Bank
                             </Button>
