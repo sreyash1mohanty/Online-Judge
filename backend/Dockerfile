@@ -1,6 +1,10 @@
 
 FROM node:18-alpine
 WORKDIR /app
-COPY . .
+RUN apk update && apk add --no-cache g++
+COPY package*.json ./
 RUN npm install
-CMD [ "node", "app.js"]
+
+COPY . .
+EXPOSE 8080
+CMD [ "node", "app.js" ]
