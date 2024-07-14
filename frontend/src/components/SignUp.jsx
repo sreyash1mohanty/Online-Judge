@@ -23,7 +23,7 @@ const handleChange = (e) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        const response = await axios.post('http://localhost:8080/signup', formData);
+        const response = await axios.post('http://13.126.241.75:8080/signup', formData);
         alert('Signup successful');
         navigate('/login');
         } catch (error) {

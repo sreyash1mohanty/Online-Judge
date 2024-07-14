@@ -6,7 +6,7 @@ const Submissions = () => {
     useEffect(() => {
         async function fetchSubmissions() {
             try {
-                const response = await axios.get('http://localhost:8080/all_submissions');
+                const response = await axios.get('http://13.126.241.75:8080/all_submissions');
                 setSubmissions(response.data.submissions);
             } catch (err) {
                 console.error('Error fetching submissions: ' + err);

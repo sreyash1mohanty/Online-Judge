@@ -41,7 +41,7 @@ function CreateProblem() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/create_problem', { ...problemData, userId });
+            const response = await axios.post('http://13.126.241.75:8080/create_problem', { ...problemData, userId });
             if (response.data.success) {
                 alert('Problem created successfully');
                 navigate('/all-problems');

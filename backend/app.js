@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 const cors = require('cors');
 require('dotenv').config();
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: ['http://localhost:5173', 'http://13.126.241.75:8080'], // Allow both local and EC2 instance
     credentials: true
 }));
 app.use(express.json());

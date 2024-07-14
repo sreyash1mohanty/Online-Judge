@@ -15,11 +15,10 @@ const UpdateProblem = () => {
         difficulty: '',
     });
     const [testCases, setTestCases] = useState([{ input: '', output: '' }]);
-
     useEffect(() => {
         async function fetchProblem() {
             try {
-                const response = await axios.get(`http://localhost:8080/problems/${id}`);
+                const response = await axios.get(`http://13.126.241.75:8080/problems/${id}`);
                 const { problem_name, problem_statement, author, difficulty, testCases } = response.data;
                 setProblemData({ problem_name, problem_statement, author, difficulty });
                 setTestCases(testCases)
@@ -54,7 +53,7 @@ const UpdateProblem = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:8080/edit_problem/${id}`, { problem: { ...problemData, testCases }, userId });
+            const response = await axios.put(`http://13.126.241.75:8080/edit_problem/${id}`, { problem: { ...problemData, testCases }, userId });
             if (response.status === 200) {
                 alert('Problem updated successfully');
                 navigate('/all-problems');

@@ -24,7 +24,7 @@ int main() {
     useEffect(() => {
         async function fetchProblem() {
             try {
-                const response = await axios.get(`http://localhost:8080/problems/${id}`);
+                const response = await axios.get(`http://13.126.241.75:8080/problems/${id}`);
                 setProblem(response.data);
             } catch (err) {
                 console.error("Unable to fetch problem: " + err);
@@ -35,7 +35,7 @@ int main() {
 
     const handleRunCode = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/run', { language: 'cpp', code, input });
+            const response = await axios.post('http://13.126.241.75:8080/run', { language: 'cpp', code, input });
             setOutput(response.data.output);
         } catch (err) {
             console.error("Unable to run code: " + err);
@@ -47,7 +47,7 @@ int main() {
             setIsSubmitting(true);
             const testCases = problem.testCases || []; 
             const results = await Promise.all(testCases.map(async (testCase) => {
-                const response = await axios.post('http://localhost:8080/run', { language: 'cpp', code, input: testCase.input });
+                const response = await axios.post('http://13.126.241.75:8080/run', { language: 'cpp', code, input: testCase.input });
                 return {
                     input: testCase.input,
                     expectedOutput: testCase.output,
@@ -60,7 +60,7 @@ int main() {
             setAllTestCasesPassed(allPassed);
             setShowResults(true);
             // const userId = userId; 
-            await axios.post('http://localhost:8080/submit', {
+            await axios.post('http://13.126.241.75:8080/submit', {
                 userId,
                 problemId: id,
                 verdict: allPassed ? 'Accepted' : 'Rejected'

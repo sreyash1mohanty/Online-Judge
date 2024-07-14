@@ -9,7 +9,7 @@ function AllProblems() {
     useEffect(() => {
         async function fetchProblems() {
             try {
-                const response = await axios.get('http://localhost:8080/problems');
+                const response = await axios.get('http://13.126.241.75:8080/problems');
                 setProblems(response.data);
             } catch (err) {
                 console.error("Error fetching the problems", err);
@@ -22,7 +22,7 @@ function AllProblems() {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this problem?")) {
             try {
-                const response = await axios.delete(`http://localhost:8080/delete/${id}`, {
+                const response = await axios.delete(`http://13.126.241.75:8080/delete/${id}`, {
                     data: { userId }} );
                 if (response.status === 200) {
                     alert('Problem deleted successfully');
