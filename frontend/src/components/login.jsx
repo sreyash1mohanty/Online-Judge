@@ -13,7 +13,7 @@ export default function LoginForm() {
 const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        const response = await axios.post('http://13.126.241.75:8080/login', {
+        const response = await axios.post('https://backend.codeloft.online/login', {
         email,
         password
         });
