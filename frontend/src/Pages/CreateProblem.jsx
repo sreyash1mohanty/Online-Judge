@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+
 function CreateProblem() {
     const { userId } = useContext(AuthContext);
     const [problemData, setProblemData] = useState({
@@ -12,20 +13,23 @@ function CreateProblem() {
         problem_statement: '',
         author: '',
         difficulty: '',
-        testCases: [{ input: '', output: '' }] // Initialize with one empty test case
+        testCases: [{ input: '', output: '' }]
     });
     const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProblemData({ ...problemData, [name]: value });
     };
+
     const handleTestCaseChange = (index, e) => {
         const { name, value } = e.target;
-        const newTestCases = problemData.testCases.map((testCase, i) => (
+        const newTestCases = problemData.testCases.map((testCase, i) =>
             i === index ? { ...testCase, [name]: value } : testCase
-        ));
+        );
         setProblemData({ ...problemData, testCases: newTestCases });
     };
+
     const handleAddTestCase = () => {
         setProblemData({
             ...problemData,
@@ -111,6 +115,9 @@ function CreateProblem() {
                                 value={testCase.input}
                                 onChange={(e) => handleTestCaseChange(index, e)}
                                 sx={{ backgroundColor: 'white' }}
+                                multiline
+                                rows={3}
+                                placeholder={`Example:\n5\n1 2 3 4 5`}
                             />
                             <TextField
                                 name="output"
@@ -121,6 +128,9 @@ function CreateProblem() {
                                 value={testCase.output}
                                 onChange={(e) => handleTestCaseChange(index, e)}
                                 sx={{ backgroundColor: 'white', ml: 2 }}
+                                multiline
+                                rows={2}
+                                placeholder="Example: 5"
                             />
                             <IconButton onClick={() => handleRemoveTestCase(index)} disabled={problemData.testCases.length === 1}>
                                 <RemoveCircleIcon />
